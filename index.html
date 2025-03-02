@@ -5,23 +5,30 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Image Search</title>
-    <script type="module" crossorigin src="/goit-js-hw-11/index.js"></script>
-    <link rel="modulepreload" crossorigin href="/goit-js-hw-11/assets/vendor-YT4DRQk6.js">
-    <link rel="stylesheet" crossorigin href="/goit-js-hw-11/assets/vendor-Dr4k8ETB.css">
-    <link rel="stylesheet" crossorigin href="/goit-js-hw-11/assets/index-U_zkGWtZ.css">
+    <script type="module" crossorigin src="/goit-js-hw-12/index.js"></script>
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-YT4DRQk6.js">
+    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/vendor-Dr4k8ETB.css">
+    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/index-98EOEC5n.css">
   </head>
-
   <body>
     <form class="form">
-      <input type="text" class="form-input" placeholder="Search images..." />
+      <input
+        type="text"
+        class="form-input"
+        id="search-input"
+        name="search-query"
+        placeholder="Search images..."
+      />
       <button type="submit" class="sub-btn">Search</button>
     </form>
 
     <ul class="gallery"></ul>
-
+    <button type="button" class="sub-loader hidden">Load more</button>
     <div class="loader hidden">
-      <span class="loading"> </span>
-      Loading images, please wait......
+      <span class="loading"> </span> Loading images, please wait......
+    </div>
+    <div class="end-message hidden">
+      We're sorry, but you've reached the end of search results.
     </div>
 
   </body>
