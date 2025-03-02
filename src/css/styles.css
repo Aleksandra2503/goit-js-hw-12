@@ -34,7 +34,6 @@ body {
   color: #fff;
 }
 
-/* Контейнер для галереї */
 .gallery {
   display: flex;
   flex-wrap: wrap;
@@ -99,6 +98,7 @@ body {
   color: #2e2f42;
   flex-direction: column;
   gap: 8px;
+  margin-top: 12px;
 }
 
 .loader.hidden {
@@ -124,7 +124,7 @@ body {
   top: 0;
   width: 0;
   height: 100%;
-  animation: loading 2s linear infinite;
+  animation: loading 1s linear infinite;
 }
 
 .loading:after {
@@ -139,7 +139,7 @@ body {
   line-height: 32px;
   color: rgb(0, 255, 255);
   mix-blend-mode: difference;
-  animation: percentage 2s linear infinite;
+  animation: percentage 1s linear infinite;
 }
 
 @keyframes loading {
@@ -159,7 +159,45 @@ body {
   50% {
     content: '50%';
   }
+
   100% {
     content: '100%';
   }
+}
+
+.sub-loader {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 125px;
+  height: 40px;
+  background: #4e75ff;
+  font: 500 16px / 1.5 'Montserrat', sans-serif;
+  letter-spacing: 0.04em;
+  color: #fff;
+  display: block;
+  margin: 0 auto;
+  margin-top: 32px;
+  margin-bottom: 48px;
+}
+
+.sub-loader.hidden {
+  display: none;
+}
+
+.end-message {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #2e2f42;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  display: none;
+  text-align: center;
+}
+
+.end-message:not(.hidden) {
+  display: block;
 }
