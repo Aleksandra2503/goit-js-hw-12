@@ -4,30 +4,33 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Image Search</title>
+    <title>HomeWork_JS_12</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
+
   <body>
-    <form class="form">
+    <form class="form js-create-form">
       <input
+        class="input js-input"
         type="text"
-        class="form-input"
-        id="search-input"
-        name="search-query"
+        name="imgTitle"
         placeholder="Search images..."
       />
-      <button type="submit" class="sub-btn">Search</button>
+      <button class="button" type="submit" class="btn">Search</button>
     </form>
-
-    <ul class="gallery"></ul>
-    <button type="button" class="sub-loader hidden">Load more</button>
-    <div class="loader hidden">
-      <span class="loading"> </span> Loading images, please wait......
+    <ul class="img-list"></ul>
+    <div class="wrap-js-btn-load-more">
+      <button class="button js-btn-load visually-hidden" type="button">
+        Load more
+      </button>
     </div>
-    <div class="end-message hidden">
-      We're sorry, but you've reached the end of search results.
-    </div>
-
+    <div class="loader visually-hidden"></div>
     <script type="module" src="./main.js"></script>
   </body>
 </html>

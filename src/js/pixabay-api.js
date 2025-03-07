@@ -1,42 +1,20 @@
 import axios from 'axios';
 
-export const fetchImages = async (searchQuery, page = 1) => {
-  const API_KEY = '48797096-f4883239ab22667ebb957e7d3';
-  const BASE_URL = 'https://pixabay.com/api/';
+export function searchImages(imgsName, page) {
+  const BASE_URL = 'https://pixabay.com';
+  const END_POINT = '/api/';
+  const url = BASE_URL + END_POINT;
 
-  try {
-    console.log('Запит до API:', BASE_URL, {
-      params: {
-        key: API_KEY,
-        q: searchQuery,
-        image_type: 'photo',
-        orientation: 'horizontal',
-        safesearch: true,
-        page: page,
-        per_page: 40,
-      },
-    });
+  const params = {
+    key: '48973939-644076cc1162f9ad5e5260876',
+    q: imgsName,
+    image_type: 'photo',
+    orientation: 'horizontal',
+    safesearch: true,
+    page: page,
+    per_page: 40,
+  };
+  const headers = { Accept: 'application/json' };
 
-    const response = await axios.get(BASE_URL, {
-      params: {
-        key: API_KEY,
-        q: searchQuery,
-        image_type: 'photo',
-        orientation: 'horizontal',
-        safesearch: true,
-        page: page,
-        per_page: 40,
-      },
-    });
-
-    console.log('Відповідь від API:', response.data);
-
-    return response.data;
-  } catch (error) {
-    console.error(
-      'Помилка при отриманні зображень:',
-      error.response ? error.response.data : error.message
-    );
-    throw error;
-  }
-};
+  return axios.get(url, { params, headers });
+}
