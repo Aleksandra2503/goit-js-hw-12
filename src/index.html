@@ -4,34 +4,27 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HomeWork_JS_12</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap"
-      rel="stylesheet"
-    />
+    <title>JavaScript - Homework - 12</title>
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
-
   <body>
-    <form class="form js-create-form">
-      <input
-        class="input js-input"
-        type="text"
-        name="imgTitle"
-        placeholder="Search images..."
-      />
-      <button class="button" type="submit" class="btn">Search</button>
-    </form>
-    <ul class="img-list"></ul>
-    <div class="wrap-js-btn-load-more">
-      <button class="button js-btn-load visually-hidden" type="button">
-        Load more
-      </button>
-    </div>
-    <ul class="gallery"></ul>
-    <div class="loader visually-hidden"></div>
-    <script type="module" src="./main.js"></script>
+    <main>
+      <div class="container">
+        <form class="search-form">
+          <input
+            type="text"
+            name="searchQuery"
+            class="search-input"
+            placeholder="Search images..."
+          />
+          <button type="submit" class="search-btn">Пошук</button>
+        </form>
+      </div>
+      <ul class="gallery"></ul>
+      <div class="loader"></div>
+      <button class="load-more hidden">Завантажити більше....</button>
+    </main>
+
+    <script src="./main.js" type="module"></script>
   </body>
 </html>
