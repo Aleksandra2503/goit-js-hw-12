@@ -13,7 +13,7 @@ body {
   border: 1 solid #808080;
 }
 
-.search-form {
+.form {
   display: flex;
   justify-content: center;
   gap: 8px;
