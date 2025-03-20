@@ -1,7 +1,7 @@
 import { fetchImages } from './js/pixabay-api.js';
 import { renderImages, clearGallery } from './js/render-functions.js';
-import iziToast from "izitoast";
-import "izitoast/dist/css/iziToast.min.css";
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
 const form = document.querySelector('.form');
 const gallery = document.querySelector('.gallery');
@@ -11,13 +11,17 @@ const loader = document.querySelector('.loader');
 let currentPage = 1;
 let currentQuery = '';
 let totalHits = 0;
-const perPage = 40;
+const perPage = 15;
 
-form.addEventListener('submit', async (event) => {
+// Скрываем кнопку "Load More" при загрузке страницы
+loadMoreBtn.classList.add('hidden');
+loader.classList.add('hidden');
+
+form.addEventListener('submit', async event => {
   event.preventDefault();
   currentQuery = event.target.searchQuery.value.trim();
   currentPage = 1;
-  
+
   if (!currentQuery) {
     iziToast.warning({ message: 'Please enter a search query!' });
     return;
@@ -30,12 +34,15 @@ form.addEventListener('submit', async (event) => {
   try {
     const data = await fetchImages(currentQuery, currentPage, perPage);
     totalHits = data.totalHits;
-    
+
     if (data.hits.length === 0) {
-      iziToast.error({ message: 'Sorry, there are no images matching your search query. Please try again!' });
+      iziToast.error({
+        message:
+          'Sorry, there are no images matching your search query. Please try again!',
+      });
       return;
     }
-    
+
     renderImages(data.hits);
     checkLoadMore(data);
   } catch (error) {
@@ -65,7 +72,7 @@ loadMoreBtn.addEventListener('click', async () => {
 function checkLoadMore(data) {
   const totalLoaded = currentPage * perPage;
   if (totalLoaded >= totalHits) {
-    iziToast.info({ message: "End of results" });
+    iziToast.info({ message: 'End of results' });
     loadMoreBtn.classList.add('hidden');
   } else {
     loadMoreBtn.classList.remove('hidden');
@@ -78,10 +85,7 @@ function smoothScroll() {
     const { height } = galleryItem.getBoundingClientRect();
     window.scrollBy({
       top: height * 2,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   }
 }
-
-
-
