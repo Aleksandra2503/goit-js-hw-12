@@ -13,7 +13,6 @@ let currentQuery = '';
 let totalHits = 0;
 const perPage = 15;
 
-// Скрываем кнопку "Load More" при загрузке страницы
 loadMoreBtn.classList.add('hidden');
 loader.classList.add('hidden');
 
