@@ -1,90 +1,126 @@
-import { fetchImages } from './js/pixabay-api.js';
-import { renderImages, clearGallery } from './js/render-functions.js';
+import { fetchData } from './js/pixabay-api';
+import {
+  renderGallery,
+  showLoader,
+  hideLoader,
+  clearGallery,
+  showLoadMoreButton,
+  hideLoadMoreButton,
+} from './js/render-functions';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
+import warningIcon from './img/warning-icon.svg';
+import cautionIcon from './img/caution-icon.svg';
 
 const form = document.querySelector('.form');
-const gallery = document.querySelector('.gallery');
+const input = document.querySelector("input[name='search-text']");
 const loadMoreBtn = document.querySelector('.load-more');
-const loader = document.querySelector('.loader');
 
-let currentPage = 1;
-let currentQuery = '';
-let totalHits = 0;
+let query = '';
+let page = 1;
 const perPage = 15;
-
-loadMoreBtn.classList.add('hidden');
-loader.classList.add('hidden');
 
 form.addEventListener('submit', async event => {
   event.preventDefault();
-  currentQuery = event.target.searchQuery.value.trim();
-  currentPage = 1;
+  query = input.value.trim();
+  if (query === '') {
+    iziToast.show({
+      title: 'Caution',
+      titleColor: '#fff',
+      titleSize: '16px',
+      titleLineHeight: '1.5',
 
-  if (!currentQuery) {
-    iziToast.warning({ message: 'Please enter a search query!' });
+      message: `Not valid data`,
+      messageColor: '#fff',
+      messageSize: '16px',
+      messageLineHeight: '1.5',
+
+      backgroundColor: '#ffa000',
+      iconUrl: cautionIcon,
+
+      progressBar: false,
+      position: 'topRight',
+    });
     return;
   }
-
+  page = 1;
   clearGallery();
-  loadMoreBtn.classList.add('hidden');
-  loader.classList.remove('hidden');
+  hideLoadMoreButton();
+  showLoader();
 
   try {
-    const data = await fetchImages(currentQuery, currentPage, perPage);
-    totalHits = data.totalHits;
-
+    const data = await fetchData(query, page, perPage);
     if (data.hits.length === 0) {
-      iziToast.error({
-        message:
-          'Sorry, there are no images matching your search query. Please try again!',
+      iziToast.show({
+        message: `Sorry, there are no images matching <br/> your search query. Please try again!`,
+        messageColor: '#fafafb',
+        messageSize: '16px',
+        messageLineHeight: '20px',
+
+        backgroundColor: '#ef4040',
+        iconUrl: warningIcon,
+
+        progressBar: false,
+        position: 'topRight',
       });
       return;
     }
-
-    renderImages(data.hits);
-    checkLoadMore(data);
+    renderGallery(data.hits);
+    if (page * perPage < data.totalHits) showLoadMoreButton();
   } catch (error) {
-    iziToast.error({ message: error.message });
+    iziToast.show({
+      message: 'Something went wrong. Please try again later.',
+      messageColor: '#fafafb',
+      messageSize: '16px',
+      messageLineHeight: '20px',
+
+      backgroundColor: '#ef4040',
+      iconUrl: warningIcon,
+
+      progressBar: false,
+      position: 'topRight',
+    });
   } finally {
-    loader.classList.add('hidden');
+    hideLoader();
+    form.reset();
   }
 });
 
 loadMoreBtn.addEventListener('click', async () => {
-  currentPage++;
-  loader.classList.remove('hidden');
-  loadMoreBtn.classList.add('hidden');
-
+  page += 1;
+  showLoader();
   try {
-    const data = await fetchImages(currentQuery, currentPage, perPage);
-    renderImages(data.hits);
-    checkLoadMore(data);
-    smoothScroll();
+    const data = await fetchData(query, page, perPage);
+    renderGallery(data.hits, true);
+    if (page * perPage >= data.totalHits) {
+      hideLoadMoreButton();
+      iziToast.show({
+        message: `We're sorry, but you've reached the end of search results.`,
+        messageColor: '#fff',
+        messageSize: '16px',
+        messageLineHeight: '20px',
+
+        backgroundColor: '#ffa000',
+        iconUrl: cautionIcon,
+
+        progressBar: false,
+        position: 'topRight',
+      });
+    }
   } catch (error) {
-    iziToast.error({ message: error.message });
+    iziToast.show({
+      message: 'Something went wrong. Please try again later.',
+      messageColor: '#fafafb',
+      messageSize: '16px',
+      messageLineHeight: '20px',
+
+      backgroundColor: '#ef4040',
+      iconUrl: warningIcon,
+
+      progressBar: false,
+      position: 'topRight',
+    });
   } finally {
-    loader.classList.add('hidden');
+    hideLoader();
   }
 });
-
-function checkLoadMore(data) {
-  const totalLoaded = currentPage * perPage;
-  if (totalLoaded >= totalHits) {
-    iziToast.info({ message: 'End of results' });
-    loadMoreBtn.classList.add('hidden');
-  } else {
-    loadMoreBtn.classList.remove('hidden');
-  }
-}
-
-function smoothScroll() {
-  const galleryItem = gallery.firstElementChild;
-  if (galleryItem) {
-    const { height } = galleryItem.getBoundingClientRect();
-    window.scrollBy({
-      top: height * 2,
-      behavior: 'smooth',
-    });
-  }
-}

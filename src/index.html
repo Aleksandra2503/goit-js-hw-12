@@ -4,27 +4,27 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JavaScript - Homework - 12</title>
+    <title>HomeWork JavaScript 12</title>
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
-    <main>
-      <div class="container">
-        <form class="form">
-          <input
-            type="text"
-            name="searchQuery"
-            class="search-input"
-            placeholder="Search images..."
-          />
-          <button type="submit" class="search-btn">Пошук</button>
-        </form>
-      </div>
-      <ul class="gallery"></ul>
-      <div class="loader"></div>
-<!--       <button class="load-more hidden">Завантажити більше....</button> -->
-      <button class="load-more">Load More</button>
-    </main>
+    <form class="form" novalidate>
+      <label>
+        <input
+          type="text"
+          name="search-text"
+          placeholder="Search images..."
+          required
+        />
+      </label>
+      <button type="submit">Search</button>
+    </form>
+
+    <ul class="gallery"></ul>
+
+    <button class="load-more visually-hidden">Load more</button>
+
+    <div class="loader visually-hidden"></div>
 
     <script src="./main.js" type="module"></script>
   </body>

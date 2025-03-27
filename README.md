@@ -1,1 +1,1 @@
-HomeWork 12 - JavaScript
+GoIT HomeWork - JAVASCRIPT 12
